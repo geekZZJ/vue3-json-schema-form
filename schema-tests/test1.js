@@ -1,4 +1,5 @@
 const Ajv = require('ajv')
+const localize = require('ajv-i18n')
 
 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
@@ -14,7 +15,7 @@ const schema = {
 }
 
 const data = {
-  age: 12,
+  age: '12',
   name: 'zzj',
   isWorker: true,
   pets: ['a', 'b', 'c'],
@@ -27,7 +28,7 @@ ajv.addKeyword({
   //   else return data.length === 6
   // },
   compile: (sch, parentSchema) => {
-    console.log(sch, parentSchema)
+    // console.log(sch, parentSchema)
     return () => true
   },
   errors: false,
@@ -35,4 +36,7 @@ ajv.addKeyword({
 
 const validate = ajv.compile(schema)
 const valid = validate(data)
-if (!valid) console.log(validate.errors)
+if (!valid) {
+  localize.ru(validate.errors)
+  console.log(validate.errors)
+}
