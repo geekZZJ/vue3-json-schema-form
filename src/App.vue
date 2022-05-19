@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'App',
   components: {},
   setup() {
-    const nameRef = ref('zzj')
+    const nameRef = ref('zzj1')
     return {
       name: nameRef,
     }
