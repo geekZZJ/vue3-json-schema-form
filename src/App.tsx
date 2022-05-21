@@ -59,9 +59,6 @@ const useStyles = createUseStyles({
   menuSelected: {
     background: '#337ab7',
     color: '#fff',
-    '&:hover': {
-      background: '#337ab7',
-    },
   },
 })
 
@@ -96,9 +93,12 @@ export default defineComponent({
       demo.uiSchemaCode = toJson(d.uiSchema)
     })
 
-    const methodRef: Ref<any> = ref()
-
     const classesRef = useStyles()
+
+    const handleChange = (v: any) => {
+      demo.data = v
+      demo.dataCode = toJson(v)
+    }
 
     function handleCodeChange(
       filed: 'schema' | 'data' | 'uiSchema',
@@ -109,7 +109,7 @@ export default defineComponent({
         demo[filed] = json
         ;(demo as any)[`${filed}Code`] = value
       } catch (err) {
-        // some thing
+        console.log(err)
       }
     }
 
@@ -163,7 +163,11 @@ export default defineComponent({
               </div>
             </div>
             <div class={classes.form}>
-              <SchemaForm />
+              <SchemaForm
+                schema={demo.schema}
+                onChange={handleChange}
+                value={demo.data}
+              />
             </div>
           </div>
         </div>
