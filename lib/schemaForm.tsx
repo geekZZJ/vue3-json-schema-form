@@ -22,7 +22,7 @@ export default defineComponent({
       props.onChange(v)
     }
     return () => {
-      const { schema, value, onChange } = props
+      const { schema, value } = props
       return (
         <SchemaItem
           schema={schema}
