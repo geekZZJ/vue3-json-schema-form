@@ -59,6 +59,9 @@ const useStyles = createUseStyles({
   menuSelected: {
     background: '#337ab7',
     color: '#fff',
+    '&:hover': {
+      background: '#337ab7',
+    },
   },
 })
 

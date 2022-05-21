@@ -61,7 +61,7 @@ export default defineComponent({
         containerRef.value,
         {
           value: props.code,
-          // language: 'json',
+          language: 'json',
           formatOnPaste: true,
           tabSize: 2,
           minimap: {
