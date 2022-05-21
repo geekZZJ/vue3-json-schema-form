@@ -73,6 +73,7 @@ export function retrieveSchema(
       } as any) as Schema
     } catch (e) {
       console.warn('could not merge subschemas in allOf:\n' + e)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { allOf, ...resolvedSchemaWithoutAllOf } = resolvedSchema
       return resolvedSchemaWithoutAllOf
     }
@@ -149,6 +150,7 @@ function resolveReference(schema: any, rootSchema: any, formData: any): Schema {
   // Retrieve the referenced schema definition.
   const $refSchema = findSchemaDefinition(schema.$ref, rootSchema)
   // Drop the $ref property of the source schema.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { $ref, ...localSchema } = schema
   // Update referenced schema definition with local schema properties.
   return retrieveSchema({ ...$refSchema, ...localSchema }, rootSchema, formData)
@@ -312,6 +314,7 @@ function withExactlyOneSubschema(
   }
   // debugger
   const subschema = validSubschemas[0]
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { [dependencyKey]: conditionPropertySchema, ...dependentSubschema } =
     subschema.properties
   const dependentSchema = { ...subschema, properties: dependentSubschema }
