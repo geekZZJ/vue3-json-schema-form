@@ -1,19 +1,13 @@
-import { SchemaFormContextKey } from '../context'
-import { defineComponent, inject, DefineComponent, ExtractPropTypes } from 'vue'
+import { useVJSFContext } from '../context'
+import { defineComponent } from 'vue'
 import { FieldPropsDefine } from '../types'
 import { isObject } from '../utils'
-
-type SchemaItemDefine = DefineComponent<typeof FieldPropsDefine>
 
 export default defineComponent({
   name: 'ObjectField',
   props: FieldPropsDefine,
   setup(props) {
-    const context: { SchemaItem: SchemaItemDefine } | undefined =
-      inject(SchemaFormContextKey)
-    if (!context) {
-      throw new Error('SchemaForm should be used')
-    }
+    const context = useVJSFContext()
 
     const handleObjectFieldChange = (key: string, v: any) => {
       const value: any = isObject(props.value) ? props.value : {}
