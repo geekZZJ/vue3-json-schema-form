@@ -41,6 +41,13 @@ export default {
           },
         },
       },
+      multiSelectArray: {
+        type: 'array',
+        items: {
+          type: 'string',
+          enum: [123, 245, 789],
+        },
+      },
     },
   },
   uiSchema: {

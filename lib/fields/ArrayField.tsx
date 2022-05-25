@@ -2,6 +2,7 @@ import { defineComponent, PropType } from 'vue'
 import { FieldPropsDefine, Schema } from '../types'
 import { useVJSFContext } from '../context'
 import { createUseStyles } from 'vue-jss'
+import Selection from '../widgets/Selection'
 
 const useStyles = createUseStyles({
   container: {
@@ -158,6 +159,16 @@ export default defineComponent({
             </ArrayItemWrapper>
           )
         })
+      } else {
+        const enumOptions = (schema as any).items.enum
+        const options = enumOptions.map((e: any) => ({ key: e, value: e }))
+        return (
+          <Selection
+            onChange={props.onChange}
+            value={props.value}
+            options={options}
+          ></Selection>
+        )
       }
     }
   },
