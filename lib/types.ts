@@ -1,4 +1,4 @@
-import { DefineComponent, PropType } from 'vue'
+import { PropType, defineComponent, DefineComponent } from 'vue'
 
 export enum SchemaTypes {
   'NUMBER' = 'number',
@@ -62,23 +62,34 @@ export const FieldPropsDefine = {
   },
 } as const
 
-const CommonWidgetPropsDefine = {
+export const TypeHelperComponent = defineComponent({
+  props: FieldPropsDefine,
+})
+
+export type CommonFieldType = typeof TypeHelperComponent
+
+export const CommonWidgetPropsDefine = {
   value: {},
   onChange: {
     type: Function as PropType<(v: any) => void>,
-    require: true,
+    required: true,
   },
 } as const
 
-const SelectionWidgetPropsDefine = {
+export const SelectionWidgetPropsDefine = {
   ...CommonWidgetPropsDefine,
   options: {
-    type: Array as PropType<{ key: string; value: any }[]>,
+    type: Array as PropType<
+      {
+        key: string
+        value: any
+      }[]
+    >,
     required: true,
   },
-}
+} as const
 
-type CommonWidgetPropsDefine = DefineComponent<
+export type CommonWidgetDefine = DefineComponent<
   typeof CommonWidgetPropsDefine,
   // eslint-disable-next-line @typescript-eslint/ban-types
   {},
@@ -86,7 +97,7 @@ type CommonWidgetPropsDefine = DefineComponent<
   {}
 >
 
-type SelectionWidgetPropsDefine = DefineComponent<
+export type SelectionWidgetDefine = DefineComponent<
   typeof SelectionWidgetPropsDefine,
   // eslint-disable-next-line @typescript-eslint/ban-types
   {},
@@ -94,10 +105,19 @@ type SelectionWidgetPropsDefine = DefineComponent<
   {}
 >
 
+export enum SelectionWidgetNames {
+  SelectionWidget = 'SelectionWidget',
+}
+
+export enum CommonWidgetNames {
+  TextWidget = 'TextWidget',
+  NumberWidget = 'NumberWidget',
+}
+
 export interface Theme {
   widgets: {
-    selectionWidget: SelectionWidgetPropsDefine
-    TextWidget: CommonWidgetPropsDefine
-    NumberWidget: CommonWidgetPropsDefine
+    [SelectionWidgetNames.SelectionWidget]: SelectionWidgetDefine
+    [CommonWidgetNames.TextWidget]: CommonWidgetDefine
+    [CommonWidgetNames.NumberWidget]: CommonWidgetDefine
   }
 }
