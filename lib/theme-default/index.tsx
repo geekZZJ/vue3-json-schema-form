@@ -1,9 +1,9 @@
 import SelectionWidget from './Selection'
 
-import { CommonWidgetPropsDefine, CommonWidgetDefine } from '../types'
+import { CommonWidgetPropsDefine } from '../types'
 import { defineComponent } from 'vue'
 
-const CommonWidget: CommonWidgetDefine = defineComponent({
+const CommonWidget = defineComponent({
   props: CommonWidgetPropsDefine,
   setup() {
     return () => null

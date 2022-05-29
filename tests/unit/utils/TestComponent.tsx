@@ -5,7 +5,9 @@ import defaultTheme from '../../../lib/theme-default'
 export const ThemeTestComponent = defineComponent({
   setup(p, { slots }) {
     return () => (
-      <ThemeProvider theme={defaultTheme}>{slots.default?.()}</ThemeProvider>
+      <ThemeProvider theme={defaultTheme as any}>
+        {slots.default?.()}
+      </ThemeProvider>
     )
   },
 })
