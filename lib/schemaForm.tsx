@@ -16,10 +16,10 @@ export default defineComponent({
       type: Function as PropType<(v: any) => void>,
       required: true,
     },
-    theme: {
-      type: Object as PropType<Theme>,
-      required: true,
-    },
+    // theme: {
+    //   type: Object as PropType<Theme>,
+    //   required: true,
+    // },
   },
   name: 'SchemaForm',
   setup(props) {
@@ -29,7 +29,7 @@ export default defineComponent({
 
     const context: any = {
       SchemaItem,
-      theme: props.theme,
+      // theme: props.theme,
     }
     provide(SchemaFormContextKey, context)
 
