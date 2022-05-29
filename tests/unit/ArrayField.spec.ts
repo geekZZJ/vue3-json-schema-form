@@ -5,10 +5,11 @@ import JsonSchemaForm, {
   ArrayField,
   Selection,
 } from '../../lib'
+import TestComponent from './utils/TestComponent'
 
 describe('ArrayField', () => {
   it('should render a list of fields', () => {
-    const wrapper = mount(JsonSchemaForm as any, {
+    const wrapper = mount(TestComponent, {
       props: {
         schema: {
           type: 'array',
@@ -37,7 +38,7 @@ describe('ArrayField', () => {
   })
 
   it('should render single type', () => {
-    const wrapper = mount(JsonSchemaForm as any, {
+    const wrapper = mount(TestComponent, {
       props: {
         schema: {
           type: 'array',
@@ -60,7 +61,7 @@ describe('ArrayField', () => {
   })
 
   it('should render select type', () => {
-    const wrapper = mount(JsonSchemaForm as any, {
+    const wrapper = mount(TestComponent, {
       props: {
         schema: {
           type: 'array',

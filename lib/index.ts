@@ -6,5 +6,6 @@ import Selection from './widgets/Selection'
 import ThemeProvider from './theme'
 
 export default SchemaForm
+export * from './types'
 
 export { NumberField, StringField, ArrayField, Selection, ThemeProvider }
