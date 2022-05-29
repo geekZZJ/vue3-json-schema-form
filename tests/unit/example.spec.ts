@@ -4,7 +4,7 @@ import JsonSchemaForm, { NumberField } from '../../lib'
 describe('JsonSchemaForm', () => {
   it('should render correct number field', async () => {
     let value = ''
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema: {
           type: 'number',

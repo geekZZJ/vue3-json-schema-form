@@ -18,7 +18,7 @@ describe('ObjectField', () => {
   })
 
   it('should render property to correct fields', () => {
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema,
         value: {},
@@ -37,7 +37,7 @@ describe('ObjectField', () => {
 
   it('should change value when sub fields trigger onChange', async () => {
     let value: any = {}
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema,
         value,
@@ -61,7 +61,7 @@ describe('ObjectField', () => {
     let value: any = {
       name: '123',
     }
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema,
         value,

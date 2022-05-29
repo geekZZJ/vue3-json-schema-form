@@ -8,7 +8,7 @@ import JsonSchemaForm, {
 
 describe('ArrayField', () => {
   it('should render a list of fields', () => {
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema: {
           type: 'array',
@@ -37,7 +37,7 @@ describe('ArrayField', () => {
   })
 
   it('should render single type', () => {
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema: {
           type: 'array',
@@ -60,7 +60,7 @@ describe('ArrayField', () => {
   })
 
   it('should render select type', () => {
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(JsonSchemaForm as any, {
       props: {
         schema: {
           type: 'array',
