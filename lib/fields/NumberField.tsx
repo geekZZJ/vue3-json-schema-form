@@ -1,10 +1,24 @@
 import { defineComponent } from 'vue'
+import { FieldPropsDefine, CommonWidgetNames } from '../types'
+import { getWidget } from '../theme'
 
 export default defineComponent({
   name: 'NumberField',
-  setup() {
+  props: FieldPropsDefine,
+  setup(props) {
+    const handleChange = (v: string) => {
+      const num = Number(v)
+      if (Number.isNaN(num)) {
+        props.onChange(undefined)
+      } else {
+        props.onChange(num)
+      }
+    }
+    const NumberWidgetRef = getWidget(CommonWidgetNames.NumberWidget)
     return () => {
-      return <div>number field</div>
+      const NumberWidget = NumberWidgetRef.value
+      const { schema, rootSchema, ...rest } = props
+      return <NumberWidget {...rest} onChange={handleChange} />
     }
   },
 })
