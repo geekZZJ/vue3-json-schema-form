@@ -50,7 +50,6 @@ const ArrayItemWrapper = defineComponent({
   },
   setup(props, { slots }) {
     const classesRef = useStyles()
-    const context = useVJSFContext()
     const handleAdd = () => props.onAdd(props.index)
     const handleDelete = () => props.onDelete(props.index)
     const handleUp = () => props.onUp(props.index)

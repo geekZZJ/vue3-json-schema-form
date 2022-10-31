@@ -17,6 +17,7 @@ export default defineComponent({
     const NumberWidgetRef = getWidget(CommonWidgetNames.NumberWidget)
     return () => {
       const NumberWidget = NumberWidgetRef.value
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { schema, rootSchema, ...rest } = props
       return <NumberWidget {...rest} onChange={handleChange} />
     }
