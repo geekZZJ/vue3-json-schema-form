@@ -14,7 +14,13 @@ export default defineComponent({
     const { schema, rootSchema, ...rest } = props
     return () => {
       const TextWidget = TextWidgetRef.value
-      return <TextWidget {...rest} onChange={handleChange} />
+      return (
+        <TextWidget
+          {...rest}
+          value={props.value}
+          onChange={(v) => handleChange(v)}
+        />
+      )
     }
   },
 })
