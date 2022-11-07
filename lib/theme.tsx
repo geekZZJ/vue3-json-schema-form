@@ -8,7 +8,7 @@ import {
 } from 'vue'
 import { Theme, SelectionWidgetNames, CommonWidgetNames } from './types'
 
-const ThEME_PROVIDER_KEY = Symbol()
+const THEME_PROVIDER_KEY = Symbol()
 
 const ThemeProvider = defineComponent({
   name: 'VJSFThemeProvider',
@@ -20,7 +20,7 @@ const ThemeProvider = defineComponent({
   },
   setup(props, { slots }) {
     const context = computed(() => props.theme)
-    provide(ThEME_PROVIDER_KEY, context)
+    provide(THEME_PROVIDER_KEY, context)
     return () => slots.default?.()
   },
 })
@@ -29,7 +29,7 @@ export function getWidget<T extends SelectionWidgetNames | CommonWidgetNames>(
   name: T,
 ) {
   const context: ComputedRef<Theme> | undefined =
-    inject<ComputedRef<Theme>>(ThEME_PROVIDER_KEY)
+    inject<ComputedRef<Theme>>(THEME_PROVIDER_KEY)
   if (!context) {
     throw new Error('vjsf theme required')
   }

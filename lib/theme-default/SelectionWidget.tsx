@@ -8,7 +8,7 @@ const Selection = defineComponent({
     const currentValRef = ref(props.value)
     watch(currentValRef, (newVal) => {
       if (newVal !== props.value) {
-        props.onChange(newVal)
+        ;(props as any).onChange(newVal)
       }
     })
     watch(

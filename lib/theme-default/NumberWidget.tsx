@@ -7,7 +7,7 @@ const NumberWidget = defineComponent({
     const handleChange = (e: any) => {
       const value = e.target.value
       e.target.value = props.value
-      props.onChange(value)
+      ;(props as any).onChange(value)
     }
     return () => {
       return <input type="number" value={props.value} onInput={handleChange} />

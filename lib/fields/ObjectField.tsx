@@ -16,7 +16,7 @@ export default defineComponent({
       } else {
         value[key] = v
       }
-      props.onChange(value)
+      ;(props as any).onChange(value)
     }
 
     return () => {

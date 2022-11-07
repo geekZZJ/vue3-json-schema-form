@@ -9,9 +9,9 @@ export default defineComponent({
     const handleChange = (v: string) => {
       const num = Number(v)
       if (Number.isNaN(num)) {
-        props.onChange(undefined)
+        ;(props as any).onChange(undefined)
       } else {
-        props.onChange(num)
+        ;(props as any).onChange(num)
       }
     }
     const NumberWidgetRef = getWidget(CommonWidgetNames.NumberWidget)

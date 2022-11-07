@@ -50,10 +50,10 @@ const ArrayItemWrapper = defineComponent({
   },
   setup(props, { slots }) {
     const classesRef = useStyles()
-    const handleAdd = () => props.onAdd(props.index)
-    const handleDelete = () => props.onDelete(props.index)
-    const handleUp = () => props.onUp(props.index)
-    const handleDown = () => props.onDown(props.index)
+    const handleAdd = () => (props as any).onAdd(props.index)
+    const handleDelete = () => (props as any).onDelete(props.index)
+    const handleUp = () => (props as any).onUp(props.index)
+    const handleDown = () => (props as any).onDown(props.index)
     return () => {
       const classes = classesRef.value
       return (
@@ -169,7 +169,7 @@ export default defineComponent({
         const options = enumOptions.map((e: any) => ({ key: e, value: e }))
         return (
           <SelectionWidget
-            onChange={props.onChange}
+            onChange={() => props.onChange}
             value={props.value}
             options={options}
           ></SelectionWidget>

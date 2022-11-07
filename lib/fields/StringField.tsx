@@ -7,7 +7,7 @@ export default defineComponent({
   props: FieldPropsDefine,
   setup(props) {
     const handleChange = (v: string) => {
-      props.onChange(v)
+      ;(props as any).onChange(v)
     }
     const TextWidgetRef = getWidget(CommonWidgetNames.TextWidget)
     // eslint-disable-next-line

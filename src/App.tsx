@@ -175,7 +175,11 @@ export default defineComponent({
                   contextRef={contextRef}
                 />
               </ThemeProvider>
-              <button onClick={() => contextRef.value.doValidate()}>
+              <button
+                onClick={() => {
+                  console.log(contextRef.value.doValidate())
+                }}
+              >
                 校验
               </button>
             </div>
