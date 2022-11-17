@@ -20,7 +20,7 @@ export default defineComponent({
     }
 
     return () => {
-      const { schema, rootSchema, value } = props
+      const { schema, rootSchema, value, errorSchema } = props
       const { SchemaItem } = context
       const properties = schema.properties || {}
       const currentValue: any = isObject(value) ? value : {}
@@ -31,6 +31,7 @@ export default defineComponent({
           value={currentValue[k]}
           key={index}
           onChange={(v: any) => handleObjectFieldChange(k, v)}
+          errorSchema={errorSchema[k] || {}}
         ></SchemaItem>
       ))
     }

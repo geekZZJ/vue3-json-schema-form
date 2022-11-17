@@ -16,7 +16,7 @@ interface ErrorSchemaObject {
 }
 
 export type ErrorSchema = ErrorSchemaObject & {
-  __errors: string[]
+  __errors?: string[]
 }
 
 function transformErrors(

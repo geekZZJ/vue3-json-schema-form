@@ -127,7 +127,7 @@ export default defineComponent({
     return () => {
       // const SelectionWidget = context.theme.widgets.selectionWidget
       const SelectionWidget = SelectionWidgetRef.value
-      const { schema, rootSchema, value } = props
+      const { schema, rootSchema, value, errorSchema } = props
       const { SchemaItem } = context
       const isMultiType = Array.isArray(schema.items)
       const isSelect = schema.items && (schema.items as any).enum
@@ -141,6 +141,7 @@ export default defineComponent({
             rootSchema={rootSchema}
             value={arr[index]}
             onChange={(v: any) => handleArrayItemChange(v, index)}
+            errorSchema={errorSchema[index] || {}}
           ></SchemaItem>
         ))
       } else if (!isSelect) {
@@ -160,6 +161,7 @@ export default defineComponent({
                 key={index}
                 rootSchema={rootSchema}
                 onChange={(v: any) => handleArrayItemChange(v, index)}
+                errorSchema={errorSchema[index] || {}}
               ></SchemaItem>
             </ArrayItemWrapper>
           )
@@ -172,6 +174,7 @@ export default defineComponent({
             onChange={() => props.onChange}
             value={props.value}
             options={options}
+            error={errorSchema.__errors}
           ></SelectionWidget>
         )
       }
