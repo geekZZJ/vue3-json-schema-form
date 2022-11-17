@@ -21,8 +21,9 @@ export default defineComponent({
       const { schema, rootSchema, errorSchema, ...rest } = props
       return (
         <NumberWidget
+          schema={schema}
           {...rest}
-          error={errorSchema.__errors}
+          errors={errorSchema.__errors}
           onChange={handleChange}
         />
       )

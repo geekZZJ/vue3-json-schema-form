@@ -171,10 +171,11 @@ export default defineComponent({
         const options = enumOptions.map((e: any) => ({ key: e, value: e }))
         return (
           <SelectionWidget
+            schema={schema}
             onChange={() => props.onChange}
             value={props.value}
             options={options}
-            error={errorSchema.__errors}
+            errors={errorSchema.__errors}
           ></SelectionWidget>
         )
       }
