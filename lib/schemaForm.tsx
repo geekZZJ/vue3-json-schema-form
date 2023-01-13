@@ -2,6 +2,7 @@ import {
   defineComponent,
   PropType,
   provide,
+  ref,
   Ref,
   shallowRef,
   watch,
@@ -12,13 +13,13 @@ import Ajv, { Options } from 'ajv'
 import { Schema } from './types'
 import SchemaItem from './SchemaItem'
 import { SchemaFormContextKey } from './context'
-import { validateFormData, ErrorSchema } from './validator'
+import { ErrorSchema, validateFormData } from './validator'
 
 interface ContextRef {
-  doValidate: () => {
+  doValidate: () => Promise<{
     errors: any[]
     valid: boolean
-  }
+  }>
 }
 
 export default defineComponent({
@@ -74,20 +75,41 @@ export default defineComponent({
     })
 
     watch(
+      () => props.value,
+      () => {
+        if (validatorResolveRef.value) doValidate()
+      },
+      { deep: true },
+    )
+
+    const validatorResolveRef = ref()
+    const validatorIndex = ref(0)
+
+    async function doValidate() {
+      const index = (validatorIndex.value += 1)
+      const result = await validateFormData(
+        validatorRef.value,
+        props.value,
+        props.schema,
+        props.locale,
+        props.customValidate,
+      )
+      if (index !== validatorIndex.value) return
+      errorSchemaRef.value = result.errorSchema
+      validatorResolveRef.value(result)
+      validatorResolveRef.value = undefined
+    }
+
+    watch(
       () => props.contextRef,
       () => {
         if (props.contextRef) {
           props.contextRef.value = {
             doValidate() {
-              const result = validateFormData(
-                validatorRef.value,
-                props.value,
-                props.schema,
-                props.locale,
-                props.customValidate,
-              )
-              errorSchemaRef.value = result.errorSchema
-              return result
+              return new Promise((resolve) => {
+                validatorResolveRef.value = resolve
+                doValidate()
+              })
             },
           }
         }

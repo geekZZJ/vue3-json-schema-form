@@ -77,7 +77,7 @@ function toErrorSchema(errors: TransformErrorObject[]) {
   }, {} as ErrorSchema)
 }
 
-export function validateFormData(
+export async function validateFormData(
   validator: Ajv,
   formData: any,
   schama: Schema,
@@ -108,7 +108,7 @@ export function validateFormData(
     }
   }
   const proxy = createErrorProxy()
-  customValidate(formData, proxy)
+  await customValidate(formData, proxy)
   const newErrorSchema = mergeObjects(errorSchema, proxy, true)
   return {
     errors,
