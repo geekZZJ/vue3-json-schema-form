@@ -2,6 +2,7 @@ import Ajv, { ErrorObject } from 'ajv'
 import i18n from 'ajv-i18n'
 import toPath from 'lodash.topath'
 import { Schema } from './types'
+import { isObject } from './utils'
 
 interface TransformErrorObject {
   name: string
@@ -81,6 +82,7 @@ export function validateFormData(
   formData: any,
   schama: Schema,
   locale = 'zh',
+  customValidate?: (data: any, errors: any) => void,
 ) {
   let validationError = null
   try {
@@ -98,9 +100,60 @@ export function validateFormData(
   }
 
   const errorSchema = toErrorSchema(errors)
+  if (!customValidate) {
+    return {
+      errors,
+      errorSchema,
+      valid: errors.length === 0,
+    }
+  }
+  const proxy = createErrorProxy()
+  customValidate(formData, proxy)
+  const newErrorSchema = mergeObjects(errorSchema, proxy, true)
   return {
     errors,
-    errorSchema,
+    errorSchema: newErrorSchema,
     valid: errors.length === 0,
   }
+}
+
+function createErrorProxy() {
+  const raw = {}
+  return new Proxy(raw, {
+    get(target, key, receiver) {
+      if (key === 'addError') {
+        return (msg: string) => {
+          const __errors = Reflect.get(target, '__errors', receiver)
+          if (__errors && Array.isArray(__errors)) {
+            __errors.push(msg)
+          } else {
+            ;(target as any).__errors = [msg]
+          }
+        }
+      }
+      const res = Reflect.get(target, key, receiver)
+      if (res === undefined) {
+        const p: any = createErrorProxy()
+        ;(target as any)[key] = p
+        return p
+      }
+    },
+  })
+}
+
+export function mergeObjects(obj1: any, obj2: any, concatArrays = false) {
+  // Recursively merge deeply nested objects.
+  const acc = Object.assign({}, obj1) // Prevent mutation of source object.
+  return Object.keys(obj2).reduce((acc, key) => {
+    const left = obj1 ? obj1[key] : {},
+      right = obj2[key]
+    if (obj1 && obj1.hasOwnProperty(key) && isObject(right)) {
+      acc[key] = mergeObjects(left, right, concatArrays)
+    } else if (concatArrays && Array.isArray(left) && Array.isArray(right)) {
+      acc[key] = left.concat(right)
+    } else {
+      acc[key] = right
+    }
+    return acc
+  }, acc)
 }

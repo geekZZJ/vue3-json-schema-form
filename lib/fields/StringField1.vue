@@ -8,7 +8,6 @@ import { FieldPropsDefine } from '../types'
 const props = defineProps(FieldPropsDefine)
 
 const handleChange = (e: any) => {
-  console.log(111, e)
   props.onChange(e.target.value)
 }
 </script>
