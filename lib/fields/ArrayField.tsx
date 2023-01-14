@@ -127,23 +127,30 @@ export default defineComponent({
     return () => {
       // const SelectionWidget = context.theme.widgets.selectionWidget
       const SelectionWidget = SelectionWidgetRef.value
-      const { schema, rootSchema, value, errorSchema } = props
+      const { schema, rootSchema, value, errorSchema, uiSchema } = props
       const { SchemaItem } = context
       const isMultiType = Array.isArray(schema.items)
       const isSelect = schema.items && (schema.items as any).enum
       if (isMultiType) {
         const items: Schema[] = schema.items as any
         const arr = Array.isArray(value) ? value : []
-        return items.map((s: Schema, index: number) => (
-          <SchemaItem
-            schema={s}
-            key={index}
-            rootSchema={rootSchema}
-            value={arr[index]}
-            onChange={(v: any) => handleArrayItemChange(v, index)}
-            errorSchema={errorSchema[index] || {}}
-          ></SchemaItem>
-        ))
+        return items.map((s: Schema, index: number) => {
+          const itemsUiSchema = uiSchema?.items
+          const us = Array.isArray(itemsUiSchema)
+            ? itemsUiSchema[index] || {}
+            : itemsUiSchema || {}
+          return (
+            <SchemaItem
+              schema={s}
+              key={index}
+              rootSchema={rootSchema}
+              uiSchema={us}
+              value={arr[index]}
+              onChange={(v: any) => handleArrayItemChange(v, index)}
+              errorSchema={errorSchema[index] || {}}
+            />
+          )
+        })
       } else if (!isSelect) {
         const arr = Array.isArray(value) ? value : []
         return arr.map((v: any, index: number) => {
@@ -160,6 +167,7 @@ export default defineComponent({
                 value={v}
                 key={index}
                 rootSchema={rootSchema}
+                uiSchema={(uiSchema?.items as any) || {}}
                 onChange={(v: any) => handleArrayItemChange(v, index)}
                 errorSchema={errorSchema[index] || {}}
               ></SchemaItem>
