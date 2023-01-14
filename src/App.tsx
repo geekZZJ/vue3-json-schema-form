@@ -75,6 +75,7 @@ export default defineComponent({
       schemaCode: string
       dataCode: string
       uiSchemaCode: string
+      customValidate: ((d: any, e: any) => void) | undefined
     } = reactive({
       schema: null,
       data: {},
@@ -82,6 +83,7 @@ export default defineComponent({
       schemaCode: '',
       dataCode: '',
       uiSchemaCode: '',
+      customValidate: undefined,
     })
 
     watchEffect(() => {
@@ -93,6 +95,7 @@ export default defineComponent({
       demo.schemaCode = toJson(d.schema)
       demo.dataCode = toJson(d.default)
       demo.uiSchemaCode = toJson(d.uiSchema)
+      // demo.customValidate = d.customValidate
     })
 
     const classesRef = useStyles()
@@ -176,9 +179,11 @@ export default defineComponent({
               <ThemeProvider theme={themeDefault as any}>
                 <SchemaForm
                   schema={demo.schema}
+                  uiSchema={demo.uiSchema || {}}
                   onChange={handleChange}
                   value={demo.data}
                   contextRef={contextRef}
+                  customValidate={demo.customValidate}
                 />
               </ThemeProvider>
               <button onClick={validateForm}>校验</button>
