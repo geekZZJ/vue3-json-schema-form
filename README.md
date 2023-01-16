@@ -1,5 +1,7 @@
 # vue3-json-schema-form
 
+![Coverage](https://img.shields.io/codecov/c/github/geekZZj/vue3-json-schema-form/master)
+
 ## Project setup
 ```
 yarn install
